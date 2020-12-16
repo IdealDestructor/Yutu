@@ -1,18 +1,14 @@
 <template id="view3">
-  <div id="echartContainer2" style="width:500px; height:500px">
+  <div id="echartContainer2" style="height:400px;width:400px">
   </div>
 </template>
-
 <script>
 import jQuery from 'jquery'
+import { getAddr } from '../addresses'
 export default {
   name: 'bar-chart',
   data () {
     return {
-      title: {
-        x: 'center',
-        text: '舆情趋势'
-      },
       tooltip: {},
       grid: {
         left: '3%',
@@ -59,65 +55,61 @@ export default {
       myChart.showLoading()
       var change = [0, 0, 0, 0, 0, 0]
       var cha = []
+      var obj = {}
+      var result1 = []
       jQuery.ajax({
         type: 'post',
         async: false,
-        url: '/servlet/helloWorld',
+        url: getAddr('/servlet/helloWorld'),
         data: {keyword: key},
         dataType: 'json',
         success: function (result) {
           if (result) {
-            for (var i = 0; i < result.length; i++) {
-              var geturl = []
-              var gettitle = []
-              var getdigest = []
-              geturl.push(result[i].url)
-              gettitle.push(result[i].title)
-              getdigest.push(result[i].digest)
-              let tr = document.createElement('tr')
-              tr.innerHTML = '<a href = "' + geturl + '">' + gettitle + '</a>'
-              let tr2 = document.createElement('tr')
-              tr2.innerHTML = '<a>' + getdigest + '</a>'
-              document.getElementById('echartContainer2').appendChild(tr)
-              document.getElementById('echartContainer2').appendChild(tr2)
-              if (result[i].time < 1460049440000) {
-                if (result[i].eventLevel === '正向') {
+            for(var k = 0; k < result.length; k++){
+              if(!obj[result[k].title,result[k].name]){ //如果能查找到，证明数组元素重复了
+                obj[result[k].title,result[k].name] = 1
+                result1.push(result[k])
+              }
+            }
+            for (var i = 0; i < result1.length; i++) {
+              if (result1[i].time < 1460049440000) {
+                if (result1[i].eventLevel === '正向') {
                   change[0]++
-                } else {
+                } else if(result1[i].eventLevel === '负向'){
                   change[0]--
                 }
               } else {
-                if (result[i].time < 1470049440000) {
-                  if (result[i].eventLevel === '正向') {
+                if (result1[i].time < 1470049440000) {
+                  if (result1[i].eventLevel === '正向') {
                     change[1]++
-                  } else {
+                  } else if(result1[i].eventLevel === '负向'){
                     change[1]--
                   }
                 } else {
-                  if (result[i].time < 1480049440000) {
-                    if (result[i].eventLevel === '正向') {
+                  if (result1[i].time < 1480049440000) {
+                    if (result1[i].eventLevel === '正向') {
                       change[2]++
-                    } else {
-                      change[1]--
+                    } else if(result1[i].eventLevel === '负向'){
+                      change[2]--
                     }
                   } else {
-                    if (result[i].time < 1490049440000) {
-                      if (result[i].eventLevel === '正向') {
+                    if (result1[i].time < 1490049440000) {
+                      if (result1[i].eventLevel === '正向') {
                         change[3]++
-                      } else {
+                      } else if(result1[i].eventLevel === '负向'){
                         change[3]--
                       }
                     } else {
-                      if (result[i].time < 1500049440000) {
-                        if (result[i].eventLevel === '正向') {
+                      if (result1[i].time < 1500049440000) {
+                        if (result1[i].eventLevel === '正向') {
                           change[4]++
-                        } else {
+                        } else if(result1[i].eventLevel === '负向'){
                           change[4]--
                         }
                       } else {
-                        if (result[i].eventLevel === '正向') {
+                        if (result1[i].eventLevel === '正向') {
                           change[5]++
-                        } else {
+                        } else if(result1[i].eventLevel === '负向'){
                           change[5]--
                         }
                       }
@@ -140,7 +132,6 @@ export default {
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
             containLabel: true
           },
           xAxis: {
@@ -153,7 +144,7 @@ export default {
           },
           series: [{
             name: '等级',
-            type: 'bar',
+            type: 'line',
             label: {
               noraml: {
                 show: true,

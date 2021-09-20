@@ -19,7 +19,7 @@
     "vue-router": "^3.0.1",
     "vue-store": "^0.3.1-moved",
     "vuex": "^3.0.1",
-    "zrender": "^4.0.4"
+    "zrender": "^5.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

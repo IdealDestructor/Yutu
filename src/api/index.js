@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 let http = axios.create({
-  baseURL: 'https://api.qianzhan.com/OpenPlatformService/',
-  withCredentials: false,
+  baseURL: 'http://localhost:8080/',
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
   },
@@ -24,8 +24,9 @@ function apiAxios(method, url, params, response) {
     data: method === 'POST' || method === 'PUT' ? params : null,
     params: method === 'GET' || method === 'DELETE' ? params : null,
   }).then(function (res) {
-    return res
+    response(res);
   }).catch(function (err) {
+    response(err);
   })
 }
 

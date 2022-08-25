@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <br/>
-    <a href="http://yutu.idealdestructor.com"><img src="./assets/logo.png"></a>
+    <img src="./assets/logo.png">
     <router-view class="view"></router-view>
   </div>
 </template>
@@ -13,7 +12,7 @@ import Result from './components/Result'
 import Result2 from './components/Result2'
 import search2 from './components/search2'
 export default {
-  components: { roof, Result, About, search2, Result2 }
+  components: { roof, Result, About,search2 }
 }
 </script>
 
@@ -24,7 +23,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 0px;
-  margin-left: 0px
+  margin-top: 60px;
 }
 </style>

@@ -11,12 +11,6 @@ var store = new Vuex.Store({
     get: [],
     cha: 0
   }
- // ,
- // mutations: {
- //   a: state => { this.$store.state.grade = gra },
- //   b: state => { this.$store.state.get = getoptiondate },
- //   c: state => { this.$store.state.cha = change }
- // }
 })
 
 export default store

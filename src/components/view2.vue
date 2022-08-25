@@ -1,6 +1,6 @@
 <template id="view2">
   <div>
-    <div id="gaugeContainer" style="height:370px;width:400px"></div>
+    <div id="gaugeContainer" style="width:500px; height:500px"></div>
   </div>
 </template>
 
@@ -63,8 +63,6 @@ export default {
       myChart.showLoading()
       var grade = 50
       var gra = 50
-      var result1= []
-      var obj = {}
       jQuery.ajax({
         type: 'post',
         async: false,
@@ -73,16 +71,10 @@ export default {
         dataType: 'json',
         success: function (result) {
           if (result) {
-            for(var k = 0; k < result.length; k++){
-              if(!obj[result[k].title,result[k].name]){ //如果能查找到，证明数组元素重复了
-                obj[result[k].title,result[k].name] = 1
-                result1.push(result[k])
-              }
-            }
-            for (var i = 0; i < result1.length; i++) {
-              if (result1[i].eventLevel === '正向') {
+            for (var i = 0; i < result.length; i++) {
+              if (result[i].eventLevel === '正向') {
                 gra = gra - 10
-              } else if (result1[i].eventLevel === '负向') {
+              } else if (result[i].eventLevel === '负向') {
                 gra = gra + 10
               }
               grade = gra

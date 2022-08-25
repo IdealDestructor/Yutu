@@ -23,7 +23,7 @@ public class barDAO {
     // �û���  
     private static final String USERNAME = "yutu";
     // ����  
-    private static final String PASSWORD = "wdq13293807356";
+    private static final String PASSWORD = "";
     // ��̬SQL
     private static final String SELECT_ALL = "SELECT top 300 [dbo].[p].name,[dbo].[p].eventLevel,distinct [dbo].[y].srcUrl,distinct [dbo].[y].title,distinct [dbo].[y].postTime,distinct [dbo].[d].digest FROM [dbo].[p],[dbo].[y],[dbo].[d] WHERE [dbo].[p].name =? and [dbo].[p].newsId = [dbo].[y].newsId and [dbo].[d].newsId = [dbo].[y].newsId";
     //��̬�����

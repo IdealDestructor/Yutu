@@ -1,8 +1,5 @@
-<template id="API2">
-  <div id="API2" style="width:600px; height:300px">
-       <div id="API22" style="width:200px; height:300px"></div>
- <div id="API21" style="width:300px; height:300px">  
-  </div>
+<template id="region">
+  <div id="region" class="box" style="width:450px; height:400px">
   </div>
 </template>
 
@@ -26,7 +23,8 @@ export default {
     var toke=""
         var keyreg = key.substring(0,2)
         var that = this
-        var myChart = that.$echarts.init(document.getElementById('API21'))
+        var myChart = that.$echarts.init(document.getElementById('region'))
+        myChart.showLoading()
         var result1= []
         var obj = {}
         var obj1={}
@@ -83,84 +81,81 @@ export default {
       })
       setTimeout(() => {
     myChart.setOption({
+    color :['#98FB98','#FFFAFA','#00FFFF','#00CED1','#87CEFA','#87CEEB','#00BFFF','#1E90FF','#F0FFF0','#836FFF','#9B30FF','#B0E2FF','#90EE90','#EE30A7','#F0FFF0','	#FF7F00'],  //(function (){
+        //var zrColor = require('zrender/src/tool/color');
+       // return zrColor.getStepColors('yellow', 'red', 28);
+       //return zrColor.color.lerp(0.5, ['yellow', 'red'], false)
+    //})(),
     title : {
-        text: '本地区代表性企业舆情监测',
-        x:'center'
+        text: '同地区机构舆情',
+        subtext: '分布监控雷达图',
+        x:'right',
+        y:'top'
     },
     tooltip : {
         trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        backgroundColor : 'rgba(0,0,250,0.2)'
     },
     legend: {
         orient : 'vertical',
         x : 'left',
-        data:reg
-    },
-    calculable : true,
-    series : [
-        {
-            name:'总体情况',
-            type:'pie',
-            radius : '55%',
-            center: ['50%', 225],
-            data:[
-                {value:335, name:'正向'},
-                {value:310, name:'中性'},
-                {value:434, name:'负向'},
-            ]
-        }
-    ]
-});
-myChart2 = that.$echarts.init(document.getElementById('API22'));
-setTimeout(() => {myChart2.setOption({
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {
-            type: 'shadow'
-        }
-    },
-    legend: {
-        data:reg
+        data: reg
     },
     toolbox: {
         show : true,
         orient : 'vertical',
-        y : 'center',
+        y:'center',
         feature : {
             mark : {show: true},
-            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            dataView : {show: true, readOnly: false},
             restore : {show: true},
             saveAsImage : {show: true}
         }
     },
-    calculable : true,
-    xAxis : [
-        {
-            type : 'category',
-            data :reg
+   polar : [
+       {
+           indicator : [
+               { text: '正向', max: 20},
+               { text: '中性', max: 20},
+               { text: '负向', max: 20}
+            ],
+            center : ['50%', 240],
+            radius : 150
         }
     ],
-    yAxis : [
-        {
-            type : 'value',
-            splitArea : {show : true}
-        }
-    ],
-    grid: {
-        x2:40
-    },
+    calculable : false,
     series : (function (){
         var series = [];
         for (var i = 1; i <= reg.length; i++) {
             series.push({
-                name:reg[i],
-                type:'bar',
-                stack: '分布',
-                data:da[i]
+                type:'radar',
+                symbol:'none',
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                          width:1
+                        }
+                    },
+                    emphasis : {
+                        areaStyle: {color:'rgba(0,250,0,0.3)'}
+                    }
+                },
+                data:[
+                  {
+                    value:da[i],
+                    name:reg[i]
+                  }
+                ]
             })
         }
         return series;
-    })()})
-}, 2000)},2000)}}}
+    })()
+        })
+        myChart.hideLoading()
+      }, 2000)
+    }
+}}
 </script>
-<style></style>
+
+<style>
+</style>
